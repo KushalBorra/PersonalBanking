@@ -15,8 +15,12 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Optional<User> findUser(ObjectId id) {
-        return userRepository.findById(id);
+    public User findUser(String email, String password) {
+        User user =  userRepository.findByEmailAndPassword(email, password);
+        if (user == null) {
+            throw new RuntimeException("User not found");
+        }
+        return user;
     }
 
     public User createUser(String userName, String email, String password) {

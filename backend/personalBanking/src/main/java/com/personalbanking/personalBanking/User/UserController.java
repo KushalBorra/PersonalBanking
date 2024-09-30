@@ -20,9 +20,12 @@ public class UserController {
         return new ResponseEntity<List<User>>(userService.allUsers(), HttpStatus.OK);
     }
 
-    @GetMapping("/findUser/{id}")
-    public ResponseEntity<Optional<User>> findUser(@PathVariable ObjectId id) {
-        return new ResponseEntity<Optional<User>>(userService.findUser(id), HttpStatus.OK);
+    @PostMapping("/findUser")
+    public ResponseEntity<User> findUser(@RequestBody Map<String, String> payload) {
+        return new ResponseEntity<User>(userService.findUser(
+                payload.get("email"),
+                payload.get("password")),
+                HttpStatus.OK);
     }
 
     @PostMapping("/createUser")
